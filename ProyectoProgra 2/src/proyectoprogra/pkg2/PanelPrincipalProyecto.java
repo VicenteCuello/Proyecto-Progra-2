@@ -11,11 +11,20 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class PanelPrincipalProyecto extends JPanel {
+    private Pelota p;
+    private MesaPool m;
+    private Image wallpaper;
     public PanelPrincipalProyecto(){
-        this.setBackground(Color.black);
+        this.setBackground(Color.LIGHT_GRAY);
         this.setLayout(null);
-        
-   
+        p = new Pelota();
+        m = new MesaPool();
+        wallpaper = new ImageIcon("sources/wallpaper.jpg").getImage();
     }
-    
+    public void paint(Graphics g){
+        g.drawImage(wallpaper,0,0, 800, 800,null);
+        m.paint(g);
+        p.paint(g);
+        repaint();
+    }
 }
