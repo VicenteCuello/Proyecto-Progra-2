@@ -18,11 +18,15 @@ class startConfig {
             int x = 40 + randX.nextInt(680);
             int y = 150 + randY.nextInt(380);
             ballSetter.add(new Pelota(x, y, i+1));
+            ballSetter.get(i).setDirections(1, 1);
+            ballSetter.get(i).setVelocity(1, 1);
         }
     }
     
     public void paint(Graphics g){
         for(int i = 0; i < ballSetter.size(); i++){
+            ballSetter.get(i).colission();
+            ballSetter.get(i).move();
             ballSetter.get(i).paint(g);
         }
     }

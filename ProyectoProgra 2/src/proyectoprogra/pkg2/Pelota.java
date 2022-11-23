@@ -7,12 +7,39 @@ import java.awt.Graphics;
 class Pelota {
     private float x, y; 
     private final int w = 20, h = 20;
+    private int dirX, dirY;
+    float velX, velY;
     private int type;
     private Color color;
     public Pelota(float x, float y, int type){
         this.x = x;
         this.y = y;
+        this.velX = 0;
+        this.velY = 0;
         this.type = type;
+    }
+    public void move(){
+        this.x += velX*(float)dirX;
+        this.y += velY*(float)dirY;
+    }
+    public void setVelocity(float x, float y){
+        this.velX = x;
+        this.velY = y;
+    }
+    public void setDirections(int x, int y){
+        this.dirX = x;
+        this.dirY = y;
+    }
+    public boolean colission(){
+        if(this.x < 40 || this.x >40 + 700){
+            this.dirX *= -1;
+            return true;
+        }
+        if(this.y < 150 || this.y >150 + 400){
+            this.dirY *= -1;
+            return true;
+        }
+        return false;
     }
     public void paint(Graphics g){
         Font font = new Font("Space Invaders",Font.BOLD, 8*w/25);
