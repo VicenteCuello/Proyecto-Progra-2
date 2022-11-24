@@ -8,8 +8,9 @@ class Pelota {
     private float x, y; 
     private final int w = 20, h = 20;
     private int dirX, dirY;
-    float velX, velY;
+    private float velX, velY;
     private int type;
+    private float deltaTime = 0.9f;
     private Color color;
     public Pelota(float x, float y, int type){
         this.x = x;
@@ -19,28 +20,53 @@ class Pelota {
         this.type = type;
     }
     public void move(){
-        this.x += velX*(float)dirX;
-        this.y += velY*(float)dirY;
+        if(velX > 0.001 || velY > 0.001){
+         this.x += velX*(float)dirX; 
+         this.y += velY*(float)dirY;
+         this.velX *=0.99555;
+         this.velY *=0.99555;
+        }else{
+            velX = 0;
+            velY = 0;
+        }
     }
     public void setVelocity(float x, float y){
-        this.velX = x;
-        this.velY = y;
+        this.velX = (float)x;
+        this.velY = (float)y;
     }
     public void setDirections(int x, int y){
         this.dirX = x;
         this.dirY = y;
     }
-    public boolean colission(){
-        if(this.x < 40 || this.x >40 + 700){
-            this.dirX *= -1;
-            return true;
+    public void colission(){
+        if(this.x - 40 < 0.1){
+            this.velX -=0.2;
+            this.x = 40f;
+            this.dirX*=-1;
         }
-        if(this.y < 150 || this.y >150 + 400){
-            this.dirY *= -1;
-            return true;
+        if(this.x -40 - 700 > 0.1){
+            this.velX -=0.2;
+            this.x = 40 + 700;
+            this.dirX*=-1;
         }
-        return false;
+        if(this.y - 150 < 0.1){
+            this.velY -=0.2;
+            this.y = 150;
+            this.dirY*=-1;
+        }
+        if(this.y - 150 - 400 > 0.8){
+            this.velY -=0.2;
+            this.y = 150 + 400;
+            this.dirY*=-1;
+        }
     }
+
+    public void getDirY() {
+        String pos2 = String.valueOf(this.x);
+        String pos = String.valueOf(this.y);
+        System.out.println(pos+"-----"+pos2);
+    }
+    
     public void paint(Graphics g){
         Font font = new Font("Space Invaders",Font.BOLD, 8*w/25);
         g.setFont(font);
