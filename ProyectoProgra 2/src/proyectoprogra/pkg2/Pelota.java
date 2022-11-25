@@ -5,66 +5,59 @@ import java.awt.Font;
 import java.awt.Graphics;
 
 class Pelota {
-    private float x, y; 
-    private final int w = 20, h = 20;
-    private int dirX, dirY;
-    private float velX, velY;
-    private int type;
-    private float deltaTime = 0.9f;
+    float x, y; 
+    float velX, velY;
+    final float mass = 2;
+    int w = 20, h = 20;
+    private final int type;
     private Color color;
+    
     public Pelota(float x, float y, int type){
         this.x = x;
         this.y = y;
-        this.velX = 0;
-        this.velY = 0;
+        this.velX = 15;
+        this.velY = 15;
         this.type = type;
     }
+    
     public void move(){
-        if(velX > 0.001 || velY > 0.001){
-         this.x += velX*(float)dirX; 
-         this.y += velY*(float)dirY;
-         this.velX *=0.99555;
-         this.velY *=0.99555;
-        }else{
+        this.x += velX; 
+        this.y += velY;
+        this.velX *=0.9988888f;
+        this.velY *=0.9988888f; 
+        if(Math.abs(this.velX) < 0.05 && Math.abs(this.velY) < 0.005 ){
             velX = 0;
             velY = 0;
         }
+        if(this.x - 199 - 39 < 0.1){
+            this.velX *=0.8f;
+            this.x = 199 + 39;
+            this.velX*=-1;
+        }
+        if(this.x + this.w + 39 - 199 - 126*7 > 0.1){
+            this.velX *=0.8f;
+            this.x = -this.w - 39 + 199 + 126*7;
+            this.velX*=-1;
+        }
+        if(this.y - 108 - 41 < 0.1){
+            this.velY *=0.8f;
+            this.y = 108 + 41;
+            this.velY*=-1;
+        }
+        if(this.y + this.h + 41 - 108 - 126*4 > 0.1){
+            this.velY *=0.8f;
+            this.y = -this.h - 41 + 108 + 126*4;
+            this.velY*=-1;
+        }
     }
+    
     public void setVelocity(float x, float y){
         this.velX = (float)x;
         this.velY = (float)y;
     }
-    public void setDirections(int x, int y){
-        this.dirX = x;
-        this.dirY = y;
-    }
-    public void colission(){
-        if(this.x - 40 < 0.1){
-            this.velX -=0.2;
-            this.x = 40f;
-            this.dirX*=-1;
-        }
-        if(this.x -40 - 700 > 0.1){
-            this.velX -=0.2;
-            this.x = 40 + 700;
-            this.dirX*=-1;
-        }
-        if(this.y - 150 < 0.1){
-            this.velY -=0.2;
-            this.y = 150;
-            this.dirY*=-1;
-        }
-        if(this.y - 150 - 400 > 0.8){
-            this.velY -=0.2;
-            this.y = 150 + 400;
-            this.dirY*=-1;
-        }
-    }
-
-    public void getDirY() {
-        String pos2 = String.valueOf(this.x);
-        String pos = String.valueOf(this.y);
-        System.out.println(pos+"-----"+pos2);
+    
+    public int getType(){
+        return this.type;
     }
     
     public void paint(Graphics g){
@@ -227,4 +220,5 @@ class Pelota {
                 break;
         }
     }
+    
 }

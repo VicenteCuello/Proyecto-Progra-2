@@ -5,14 +5,17 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 
 class MesaPool {
-    private Image poolImage;
+    private final Image poolImage;
     private int x, y;
-    private int w = 700;
-    private int h = 400;
+    private final int w = 126*7;
+    private final int h = 126*4;
+    
     public MesaPool(){   
         poolImage = new ImageIcon("sources/mesapool.png").getImage();
     }
+    
     public void paint(Graphics g){
-        g.drawImage(poolImage, 40, 150, w, h, null);
+        g.drawImage(poolImage, 199, 108, w, h, null);
     }
+    
 }

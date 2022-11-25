@@ -3,9 +3,9 @@ package proyectoprogra.pkg2;
 import javax.swing.JFrame;
 
 public class VentanaProyecto extends JFrame {
-    public PanelPrincipalProyecto panel;
+    
     public VentanaProyecto(){
-        this.setSize(800, 800);
+        this.setSize(1280, 720);
         setTitle("Pool");
         this.setResizable(false);
         this.add(new PanelPrincipalProyecto());
@@ -13,4 +13,5 @@ public class VentanaProyecto extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setVisible(true);
     }
+    
 }
