@@ -23,9 +23,9 @@ class Pelota {
     public void move(){
         this.x += velX; 
         this.y += velY;
-        this.velX *=0.9988888f;
-        this.velY *=0.9988888f; 
-        if(Math.abs(this.velX) < 0.05 && Math.abs(this.velY) < 0.005 ){
+        this.velX *=0.99888f;
+        this.velY *=0.99888f; 
+        if(Math.abs(this.velX) < 0.05 && Math.abs(this.velY) < 0.05 ){
             velX = 0;
             velY = 0;
         }

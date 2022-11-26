@@ -1,4 +1,5 @@
 package proyectoprogra.pkg2;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Random;
@@ -6,9 +7,11 @@ import java.util.Random;
 class startConfig {
     
     private ArrayList<Pelota> ballSetter;
+    private Taco taco;
     
     public startConfig(){
         ballSetter = new ArrayList<>();
+        taco = new Taco();
     }
     
     public void startGame(){
@@ -30,7 +33,7 @@ class startConfig {
                 }
             }while(colDetector == true);
             ballSetter.add(aux);
-            ballSetter.get(i).setVelocity(i, i);
+            ballSetter.get(i).setVelocity(1, 1);
         }
     }
     
@@ -93,6 +96,9 @@ class startConfig {
                 bCollision(ballSetter.get(i), ballSetter.get(j));
             }
         }
+        taco.updatePosition();
+        taco.BallPosition(ballSetter.get(0));
+        taco.paint(g, Color.red);
     }
     
 }
