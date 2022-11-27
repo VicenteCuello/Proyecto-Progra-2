@@ -31,8 +31,8 @@ public class PanelPrincipalProyecto extends JPanel {
         g.drawImage(wallpaper,0,0, 1280, 720,null);
         Table.paint(g);
         start.paint(g, this);
-        Players.get(0).Paint(g, 24, 100);
-        Players.get(1).Paint(g, 1100, 100);
+        Players.get(0).Paint(g, 24, 100,1);
+        Players.get(1).Paint(g, 1100, 100,2);
         repaint();
     }
 }
