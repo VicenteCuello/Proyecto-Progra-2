@@ -3,6 +3,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Random;
+import javax.swing.JPanel;
 
 class startConfig {
     
@@ -86,8 +87,11 @@ class startConfig {
         return false;
     }
     
-    public void paint(Graphics g){
+    public void paint(Graphics g, JPanel Frame){
         for(int i = 0; i < ballSetter.size(); i++){
+            if(ballSetter.get(i).getType()==16){
+                taco.BallPosition(ballSetter.get(i).x, ballSetter.get(i).y, ballSetter.get(i).velX, ballSetter.get(i).velY);
+            }
             ballSetter.get(i).move();
             ballSetter.get(i).paint(g);
         }
@@ -96,9 +100,7 @@ class startConfig {
                 bCollision(ballSetter.get(i), ballSetter.get(j));
             }
         }
-        taco.updatePosition();
-        taco.BallPosition(ballSetter.get(0));
-        taco.paint(g, Color.red);
+        taco.updatePosition(Frame);
+        taco.paint(g, Color.red, ballSetter, Frame);
     }
-    
 }
