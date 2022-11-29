@@ -7,8 +7,8 @@ import javax.swing.JPanel;
 
 class startConfig {
     
-    private ArrayList<Pelota> ballSetter;
-    private Taco taco;
+    ArrayList<Pelota> ballSetter;
+    Taco taco;
     
     public startConfig(){
         ballSetter = new ArrayList<>();
@@ -34,7 +34,7 @@ class startConfig {
                 }
             }while(colDetector == true);
             ballSetter.add(aux);
-            ballSetter.get(i).setVelocity(1, 1);
+            ballSetter.get(i).setVelocity(0, 0);
         }
     }
     

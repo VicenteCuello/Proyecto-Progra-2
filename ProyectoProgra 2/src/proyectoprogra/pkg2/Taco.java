@@ -2,10 +2,13 @@
 package proyectoprogra.pkg2;
 
 import java.awt.Color;
+import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import javax.swing.JPanel;
 
@@ -14,6 +17,7 @@ final class Taco extends MouseAdapter{
     private float MousePositionX, MousePositionY;
     private float BallPositionX, BallPositionY;
     private float velX, velY;
+    MouseListener ma;
     
     public Taco(){
     }
@@ -33,6 +37,20 @@ final class Taco extends MouseAdapter{
         BallPositionX =(float) (BallPositionX + 20*Math.cos(angle));
         BallPositionY =(float) (BallPositionY + 20*Math.sin(angle));
         velY = vy;
+    }
+    public void golpearBola(Pelota bola, JPanel Frame){
+        ma = new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e){
+                if(bola.velX == 0 && bola.velY==0){
+                    double distX = MousePositionX - BallPositionX;
+                    double distY = MousePositionY - BallPositionY;
+                    double angle = Math.atan2(distY, distX);
+                    bola.setVelocity((float)((-1)*(1*Math.cos(angle))), (float)((-1)*(1*Math.sin(angle))));
+                }
+            }
+        };Frame.addMouseListener(ma);
+        
     }
     
     public void paint(Graphics g, Color c, ArrayList<Pelota> A, JPanel Frame){

@@ -24,6 +24,7 @@ public class PanelPrincipalProyecto extends JPanel {
         Table = new MesaPool();
         wallpaper = new ImageIcon("sources/wallpaper.jpg").getImage();
         start.startGame();
+        start.taco.golpearBola(start.ballSetter.get(15),this);
     }
     
     @Override
