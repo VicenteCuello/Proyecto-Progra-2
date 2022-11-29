@@ -25,16 +25,23 @@ final class Taco extends MouseAdapter{
     }
     
     public void BallPosition(float x, float y, float vx, float vy){
-        BallPositionX = x;
-        BallPositionY = y;
-        velX = vx;
+        BallPositionX = x+10;
+        BallPositionY = y+10;
+        double distX = MousePositionX - BallPositionX;
+        double distY = MousePositionY - BallPositionY;
+        double angle = Math.atan2(distY, distX);
+        BallPositionX =(float) (BallPositionX + 20*Math.cos(angle));
+        BallPositionY =(float) (BallPositionY + 20*Math.sin(angle));
         velY = vy;
     }
     
     public void paint(Graphics g, Color c, ArrayList<Pelota> A, JPanel Frame){
         g.setColor(c);
-        int x1 = (int)Math.round(MousePositionX);
-        int y1 = (int)Math.round(MousePositionY);
+        double distX = MousePositionX - BallPositionX;
+        double distY = MousePositionY - BallPositionY;
+        double angle = Math.atan2(distY, distX);
+        int x1 = (int)(BallPositionX + 350*Math.cos(angle));
+        int y1 = (int)(BallPositionY + 350*Math.sin(angle));
         int x2 = (int)Math.round(BallPositionX);
         int y2 = (int)Math.round(BallPositionY);
         this.updatePosition(Frame);

@@ -41,15 +41,31 @@ class Player {
         
         Font font = new Font("Space Invaders",Font.BOLD,12);
         Font font2 = new Font("Space Invaders",Font.BOLD,18);
-        
-        g.setFont(font);
-        g.setColor(Color.white);
-        String score = String.valueOf(Score);
-        g.drawString("PUNTAJE: "+score, x+5, y+130);
-        
-        String player = String.valueOf(numjugador);
-        g.setFont(font2);
-        g.drawString("PLAYER " +player, x+5, y+50);
+        String score, player;
+        switch (numjugador) {
+            case 1:
+                player = String.valueOf(numjugador);
+                g.setColor(Color.red);
+                
+                g.setFont(font2);
+                g.drawString("PLAYER " +player, x+5, y+50);
+                
+                g.setFont(font);
+                score = String.valueOf(Score);
+                g.drawString("PUNTAJE: "+score, x+5, y+130);
+                break;
+            case 2:
+                player = String.valueOf(numjugador);
+                g.setColor(Color.blue);
+                
+                g.setFont(font2);
+                g.drawString("PLAYER " +player, x+5, y+50);
+                
+                g.setFont(font);
+                score = String.valueOf(Score);
+                g.drawString("PUNTAJE: "+score, x+5, y+130);
+                break;
+        }
     }
     
 }
