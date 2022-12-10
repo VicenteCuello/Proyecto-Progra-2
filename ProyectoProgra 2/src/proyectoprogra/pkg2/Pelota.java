@@ -3,10 +3,12 @@ package proyectoprogra.pkg2;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.util.ArrayList;
 
 class Pelota {
-    float x, y; 
-    float velX, velY;
+    
+    double x, y; 
+    double velX, velY;
     final float mass = 2;
     int w = 20, h = 20;
     private final int type;
@@ -23,31 +25,136 @@ class Pelota {
     public void move(){
         this.x += velX; 
         this.y += velY;
-        this.velX *=0.99888f;
-        this.velY *=0.99888f; 
+        this.velX *=0.998f;
+        this.velY *=0.998f; 
         if(Math.abs(this.velX) < 0.05 && Math.abs(this.velY) < 0.05 ){
             velX = 0;
             velY = 0;
         }
-        if(this.x - 199 - 39 < 0.1){
-            this.velX *=0.8f;
-            this.x = 199 + 39;
-            this.velX*=-1;
+    }
+    
+    public void checkCollision(ArrayList<Segmento> G, int n){
+        if(n == 1){
+            for (int i = 0; i < 10; i++) {
+                
+                double dx = this.x+10 - G.get(i).cx;
+                double dy = this.y+10 - G.get(i).cy;
+                
+                double cosine = Math.cos(G.get(i).angle);
+                double sine = Math.sin(G.get(i).angle);
+                
+                
+                double dx_ = cosine * dx + sine * dy;
+                double dy_ = cosine * dy - sine * dx;
+                double velX_ = cosine * this.velX + sine * this.velY;
+                double velY_ = -sine * this.velX + cosine * this.velY ;
+                
+                if (dy_ > -10 && this.x+10 >= G.get(i).x1 && this.x+10 < G.get(i).x2){
+                    dy_ = -10;
+                    velY_ = -0.8*velY_;  
+                }
+                
+                dx = cosine * dx_ - sine * dy_;
+                dy = cosine * dy_ + sine * dx_;
+                
+                this.velX = cosine * velX_ - sine * velY_;
+                this.velY = cosine * velY_ + sine * velX_;
+                this.x = G.get(i).cx + dx - 10;
+                this.y = G.get(i).cy + dy - 10;
+                
+            }
         }
-        if(this.x + this.w + 39 - 199 - 126*7 > 0.1){
-            this.velX *=0.8f;
-            this.x = -this.w - 39 + 199 + 126*7;
-            this.velX*=-1;
+        
+        if(n == 2){
+            for (int i = 10; i < 20; i++) {
+                
+                double dx = this.x+10 - G.get(i).cx;
+                double dy = this.y+10 - G.get(i).cy;
+                
+                double cosine = Math.cos(G.get(i).angle);
+                double sine = Math.sin(G.get(i).angle);
+                
+                double dx_ = cosine * dx + sine * dy;
+                double dy_ = cosine * dy - sine * dx;
+                double velX_ = cosine * this.velX + sine * this.velY;
+                double velY_ = -sine * this.velX + cosine * this.velY ;
+                
+                if (dy_ < 10 && this.x+10 >= G.get(i).x1 && this.x+10 < G.get(i).x2){
+                    dy_ = 10;
+                    velY_ = -0.8*velY_;  
+                }
+                
+                dx = cosine * dx_ - sine * dy_;
+                dy = cosine * dy_ + sine * dx_;
+                
+                this.velX = cosine * velX_ - sine * velY_;
+                this.velY = cosine * velY_ + sine * velX_;
+                this.x = G.get(i).cx + dx - 10;
+                this.y = G.get(i).cy + dy - 10;
+                
+            }
         }
-        if(this.y - 108 - 41 < 0.1){
-            this.velY *=0.8f;
-            this.y = 108 + 41;
-            this.velY*=-1;
+        
+        if(n == 3){
+            for (int i = 20; i < 25; i++) {
+                
+                double dx = this.x+10 - G.get(i).cx;
+                double dy = this.y+10 - G.get(i).cy;
+                
+                double cosine = Math.cos(Math.PI - Math.PI/2 -G.get(i).angle);
+                double sine = Math.sin(Math.PI - Math.PI/2-G.get(i).angle);
+                
+                
+                double dx_ = cosine * dx + sine * dy;
+                double dy_ = cosine * dy - sine * dx;
+                double velX_ = cosine * this.velX + sine * this.velY;
+                double velY_ = -sine * this.velX + cosine * this.velY ;
+                
+                if (dx_ < 10 && this.y+10 >= G.get(i).y1 && this.y+10 < G.get(i).y2){
+                    dx_ = 10;
+                    velX_ = -0.8*velX_;  
+                }
+                
+                dx = cosine * dx_ - sine * dy_;
+                dy = cosine * dy_ + sine * dx_;
+                
+                this.velX = cosine * velX_ - sine * velY_;
+                this.velY = cosine * velY_ + sine * velX_;
+                this.x = G.get(i).cx + dx - 10;
+                this.y = G.get(i).cy + dy - 10;
+                
+            }
         }
-        if(this.y + this.h + 41 - 108 - 126*4 > 0.1){
-            this.velY *=0.8f;
-            this.y = -this.h - 41 + 108 + 126*4;
-            this.velY*=-1;
+        
+        if(n == 4){
+            for (int i = 25; i < 30; i++) {     
+                
+                double dx = this.x+10 - G.get(i).cx;
+                double dy = this.y+10 - G.get(i).cy;
+                
+                double cosine = Math.cos(Math.PI - Math.PI/2 -G.get(i).angle);
+                double sine = Math.sin(Math.PI - Math.PI/2-G.get(i).angle);
+                
+                
+                double dx_ = cosine * dx + sine * dy;
+                double dy_ = cosine * dy - sine * dx;
+                double velX_ = cosine * this.velX + sine * this.velY;
+                double velY_ = -sine * this.velX + cosine * this.velY ;
+                
+                if (dx_ > -10 && this.y+10 >= G.get(i).y1 && this.y+10 < G.get(i).y2){
+                    dx_ = -10;
+                    velX_ = -0.8*velX_;  
+                }
+                
+                dx = cosine * dx_ - sine * dy_;
+                dy = cosine * dy_ + sine * dx_;
+                
+                this.velX = cosine * velX_ - sine * velY_;
+                this.velY = cosine * velY_ + sine * velX_;
+                this.x = G.get(i).cx + dx - 10;
+                this.y = G.get(i).cy + dy - 10;
+                
+            }
         }
     }
     
@@ -62,6 +169,8 @@ class Pelota {
     
     public void paint(Graphics g){
         Font font = new Font("Space Invaders",Font.BOLD, 8*w/25);
+        int x = (int) this.x;
+        int y = (int) this.y;
         g.setFont(font);
         switch (type){
             case 1:

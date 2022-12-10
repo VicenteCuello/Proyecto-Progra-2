@@ -9,10 +9,12 @@ class startConfig {
     
     ArrayList<Pelota> ballSetter;
     Taco taco;
+    MesaPool Table;
     
     public startConfig(){
         ballSetter = new ArrayList<>();
         taco = new Taco();
+        Table = new MesaPool();
     }
     
     public void startGame(){
@@ -24,8 +26,8 @@ class startConfig {
                 colDetector = false;
                 Random randX = new Random();
                 Random randY = new Random();
-                int x = 199 + randX.nextInt(683);
-                int y = 108 + randY.nextInt(396);
+                int x = 251 + randX.nextInt(600);
+                int y = 164 + randY.nextInt(300);
                 aux = new Pelota(x,y,i+1);
                 for(int j = 0; j < ballSetter.size();j++){
                     if(bCollision(aux, ballSetter.get(j)) == true && aux.getType()!= ballSetter.get(j).getType()){
@@ -39,10 +41,11 @@ class startConfig {
     }
     
     public boolean bCollision(Pelota A, Pelota B){
-        float dx = B.x- A.x;
-        float dy = B.y - A.y;
+        double dx = B.x- A.x;
+        double dy = B.y - A.y;
         double dist = Math.sqrt(dx*dx + dy*dy);
         if(dist < 20){
+            
             double angle = Math.atan2(dy, dx);
             double sin = Math.sin(angle);
             double cos = Math.cos(angle);
@@ -68,27 +71,32 @@ class startConfig {
             x2 += vx2/absV*overlap;
             
             double x1final = x1*cos-y1*sin;
-            double  y1final = y1*cos+x1*sin;
+            double y1final = y1*cos+x1*sin;
             double x2final = x2*cos-y2*sin;
             double y2final = y2*cos+x2*sin;
             
-            B.x = (float) (A.x + x2final);
-            B.y = (float) (A.y + y2final);
+            B.x = A.x + x2final;
+            B.y = A.y + y2final;
     
-            A.x = (float) (A.x + x1final);
-            A.y = (float) (A.y + y1final);
+            A.x = A.x + x1final;
+            A.y = A.y + y1final;
             
-            A.velX = (float) (vx1*cos-vy1*sin);
-            A.velY = (float) (vy1*cos+vx1*sin);
-            B.velX = (float) (vx2*cos-vy2*sin);
-            B.velY = (float) (vy2*cos+vx2*sin);
+            A.velX = vx1*cos-vy1*sin;
+            A.velY = vy1*cos+vx1*sin;
+            B.velX = vx2*cos-vy2*sin;
+            B.velY = vy2*cos+vx2*sin;
             return true;
         }
         return false;
     }
     
     public void paint(Graphics g, JPanel Frame){
+        
         for(int i = 0; i < ballSetter.size(); i++){
+            ballSetter.get(i).checkCollision(Table.Bordes, 1);
+            ballSetter.get(i).checkCollision(Table.Bordes, 2);
+            ballSetter.get(i).checkCollision(Table.Bordes, 3);
+            ballSetter.get(i).checkCollision(Table.Bordes, 4);
             if(ballSetter.get(i).getType()==16){
                 taco.BallPosition(ballSetter.get(i).x, ballSetter.get(i).y, ballSetter.get(i).velX, ballSetter.get(i).velY);
             }
@@ -103,4 +111,5 @@ class startConfig {
         taco.updatePosition(Frame);
         taco.paint(g, Color.red, ballSetter, Frame);
     }
+    
 }
