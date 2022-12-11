@@ -50,6 +50,11 @@ final class Taco extends MouseAdapter{
             @Override
             public void mouseClicked(MouseEvent e){
                 if(balls(p) == true){
+                    if(myTurn == true){
+                        myTurn = false;
+                    }else{
+                        myTurn = true;
+                    }
                     double distX = MousePositionX - BallPositionX;
                     double distY = MousePositionY - BallPositionY;
                     double angle = Math.atan2(distY, distX);
