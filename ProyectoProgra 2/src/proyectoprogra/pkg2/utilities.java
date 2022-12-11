@@ -5,18 +5,55 @@ import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.JPanel;
 
+class hole{
+    int x, y, w=20, h=20;
+    public hole(int x, int y){
+        this.x = x;
+        this.y = y;
+    }
+    public boolean enterBall(Pelota p){
+        boolean detector = false;
+        double x1 = x + w/2;
+        double y1 = y + h/2;
+        double x2 = p.x+p.w/2;
+        double y2 = p.y+p.h/2;
+        double dx = x1-x2;
+        double dy = y1-y2;
+        if(Math.sqrt(dx*dx+dy*dy) < 20){
+            detector = true;
+        }
+        return detector;
+    }
+}
+
 class startConfig {
     
     ArrayList<Pelota> ballSetter;
-    Taco taco;
     MesaPool Table;
-    
+    ArrayList<Player> Players;  
+    ArrayList<hole> Agujeros;
     public startConfig(){
+        Agujeros = new ArrayList();
+        Agujeros.add(new hole(199+6,108+6));
+        Agujeros.add(new hole(199+430,108+5));
+        Agujeros.add(new hole(199+856,108+6));
+        Agujeros.add(new hole(199+430,108+477));
+        Agujeros.add(new hole(199+6,108+477));
+        Agujeros.add(new hole(199+856,108+477));
         ballSetter = new ArrayList<>();
-        taco = new Taco();
         Table = new MesaPool();
+        Players = new ArrayList<>();
+        Players.add(new Player(false));
+        Players.add(new Player(true));
     }
-    
+    public boolean enterCheck(Pelota p){
+        for (int i = 0; i < Agujeros.size(); i++) {
+            if(Agujeros.get(i).enterBall(p) == true){
+                return true;
+            }
+        }
+        return false;
+    }
     public void startGame(){
         ballSetter = new ArrayList<>();
         boolean colDetector;
@@ -29,7 +66,7 @@ class startConfig {
                 int x = 251 + randX.nextInt(600);
                 int y = 164 + randY.nextInt(300);
                 aux = new Pelota(x,y,i+1);
-                for(int j = 0; j < ballSetter.size();j++){
+                for(int j = 0; j < ballSetter.size(); j++){
                     if(bCollision(aux, ballSetter.get(j)) == true && aux.getType()!= ballSetter.get(j).getType()){
                         colDetector = true;
                     }
@@ -98,18 +135,32 @@ class startConfig {
             ballSetter.get(i).checkCollision(Table.Bordes, 3);
             ballSetter.get(i).checkCollision(Table.Bordes, 4);
             if(ballSetter.get(i).getType()==16){
-                taco.BallPosition(ballSetter.get(i).x, ballSetter.get(i).y, ballSetter.get(i).velX, ballSetter.get(i).velY);
+                Players.get(0).taco.BallPosition(ballSetter.get(i).x, ballSetter.get(i).y, ballSetter.get(i).velX, ballSetter.get(i).velY);
+                Players.get(1).taco.BallPosition(ballSetter.get(i).x, ballSetter.get(i).y, ballSetter.get(i).velX, ballSetter.get(i).velY);
             }
             ballSetter.get(i).move();
             ballSetter.get(i).paint(g);
+        }
+        for (int i = 0; i < ballSetter.size(); i++) {
+            if(this.enterCheck(ballSetter.get(i)) == true){
+                if(Players.get(0).taco.myTurn == true){
+                    Players.get(0).addPoint(ballSetter.get(i));
+                    Players.get(0).addPelota(ballSetter.get(i));
+                    ballSetter.remove(i);
+                }
+                if(Players.get(1).taco.myTurn == true){
+                    Players.get(1).addPoint(ballSetter.get(i));
+                    Players.get(1).addPelota(ballSetter.get(i));
+                    ballSetter.remove(i);
+                }
+            }
         }
         for(int i = 0; i < ballSetter.size()-1; i++){
             for(int j = i+1; j<ballSetter.size(); j++){
                 bCollision(ballSetter.get(i), ballSetter.get(j));
             }
         }
-        taco.updatePosition(Frame);
-        taco.paint(g, Color.red, ballSetter, Frame);
+        Players.get(0).Paint(g, 24, 100,1, ballSetter, Frame);
+        Players.get(1).Paint(g, 1100, 100,2, ballSetter, Frame);
     }
-    
 }

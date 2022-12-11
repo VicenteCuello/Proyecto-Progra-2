@@ -10,29 +10,24 @@ import javax.swing.JPanel;
 public class PanelPrincipalProyecto extends JPanel {
     
     private final startConfig start;
-    private final ArrayList<Player> Players;
     private final MesaPool Table;
     private final Image wallpaper;
     
     public PanelPrincipalProyecto(){
         this.setBackground(Color.LIGHT_GRAY);
         this.setLayout(null);
-        Players = new ArrayList<>();
-        Players.add(new Player());
-        Players.add(new Player());
         start = new startConfig();
         Table = new MesaPool();
         wallpaper = new ImageIcon("sources/wallpaper.jpg").getImage();
         start.startGame();
-        start.taco.golpearBola(start.ballSetter.get(15),this, start.ballSetter);
+        start.Players.get(0).taco.golpearBola(start.ballSetter.get(15),this, start.ballSetter);
+        start.Players.get(1).taco.golpearBola(start.ballSetter.get(15),this, start.ballSetter);
     }
     
     @Override
     public void paint(Graphics g){
         g.drawImage(wallpaper,0,0, 1280, 720,null);
-        Table.paint(g);
-        Players.get(0).Paint(g, 24, 100,1);
-        Players.get(1).Paint(g, 1100, 100,2);
+        Table.paint(g); 
         start.paint(g, this);
         repaint();
     }

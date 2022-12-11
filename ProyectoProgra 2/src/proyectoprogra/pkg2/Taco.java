@@ -10,14 +10,16 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import javax.swing.JPanel;
 
+
 final class Taco extends MouseAdapter{
-    
+    Boolean myTurn;
     private final int ball = 16;
     private double MousePositionX, MousePositionY;
     private double BallPositionX, BallPositionY;
     MouseListener ma;
     
-    public Taco(){
+    public Taco(Boolean state){
+        myTurn = state;
     }
     
     public void updatePosition(JPanel Frame){
@@ -51,11 +53,10 @@ final class Taco extends MouseAdapter{
                     double distX = MousePositionX - BallPositionX;
                     double distY = MousePositionY - BallPositionY;
                     double angle = Math.atan2(distY, distX);
-                    bola.setVelocity((float)((-1)*(5*Math.cos(angle))), (float)((-1)*(5*Math.sin(angle))));
+                    bola.setVelocity((float)((-1)*(Math.cos(angle))), (float)((-1)*(Math.sin(angle))));
                 }
             }
         };Frame.addMouseListener(ma);
-        
     }
     
     public Boolean balls(ArrayList<Pelota> setter){

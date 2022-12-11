@@ -5,16 +5,18 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.util.ArrayList;
-import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 class Player {
+    
+    public Taco taco;
+    
     private int Score;
     private final ArrayList<Pelota> Puntos;
-    private JLabel puntaje;
     
-    public Player(){
+    public Player(Boolean state){
+        taco = new Taco(state);
         Puntos = new ArrayList<>();
-        puntaje = new JLabel();
         Score = 0;
     }
     
@@ -32,7 +34,11 @@ class Player {
         }
     }
     
-    public void Paint(Graphics g, int x, int y, int numjugador){
+    public void addPelota(Pelota p){
+        Puntos.add(p);
+    }
+    
+    public void Paint(Graphics g, int x, int y, int numjugador, ArrayList<Pelota> p, JPanel Frame){
         
         g.setColor(Color.BLACK);
         g.fillRect(x, y, 150, 520);
@@ -53,6 +59,10 @@ class Player {
                 g.setFont(font);
                 score = String.valueOf(Score);
                 g.drawString("PUNTAJE: "+score, x+5, y+130);
+                taco.updatePosition(Frame);
+                if(taco.myTurn == true){
+                    taco.paint(g, Color.red, p, Frame);
+                }
                 break;
             case 2:
                 player = String.valueOf(numjugador);
@@ -64,6 +74,10 @@ class Player {
                 g.setFont(font);
                 score = String.valueOf(Score);
                 g.drawString("PUNTAJE: "+score, x+5, y+130);
+                taco.updatePosition(Frame);
+                if(taco.myTurn == true){
+                    taco.paint(g, Color.blue, p, Frame);
+                }
                 break;
         }
     }
