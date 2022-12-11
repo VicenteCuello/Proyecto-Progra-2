@@ -54,7 +54,7 @@ class startConfig {
         }
         return false;
     }
-    public void startGame(){
+    public void startGame(PanelPrincipalProyecto Frame){
         ballSetter = new ArrayList<>();
         boolean colDetector;
         Pelota aux;
@@ -75,8 +75,16 @@ class startConfig {
             ballSetter.add(aux);
             ballSetter.get(i).setVelocity(0, 0);
         }
+        Players.get(0).taco.golpearBola(ballSetter.get(15),Frame, ballSetter);
+        Players.get(1).taco.golpearBola(ballSetter.get(15),Frame, ballSetter);
     }
-    
+    public void restart(PanelPrincipalProyecto Frame){
+        for(int i=0; i<2; i++){
+            Players.get(i).restart();
+        }
+        this.ballSetter.removeAll(this.ballSetter);
+        this.startGame(Frame);
+    }
     public boolean bCollision(Pelota A, Pelota B){
         double dx = B.x- A.x;
         double dy = B.y - A.y;

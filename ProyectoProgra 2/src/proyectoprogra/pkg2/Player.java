@@ -37,6 +37,10 @@ class Player {
     public void addPelota(Pelota p){
         Puntos.add(p);
     }
+    public void restart(){
+        Puntos.removeAll(Puntos);
+        Score = 0;
+    }
     
     public void Paint(Graphics g, int x, int y, int numjugador, ArrayList<Pelota> p, JPanel Frame){
         

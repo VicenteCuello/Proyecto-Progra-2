@@ -53,7 +53,7 @@ final class Taco extends MouseAdapter{
                     double distX = MousePositionX - BallPositionX;
                     double distY = MousePositionY - BallPositionY;
                     double angle = Math.atan2(distY, distX);
-                    bola.setVelocity((float)((-1)*(Math.cos(angle))), (float)((-1)*(Math.sin(angle))));
+                    bola.setVelocity((float)((-1)*(Math.cos(angle))*6), (float)((-1)*(Math.sin(angle))*6));
                 }
             }
         };Frame.addMouseListener(ma);
