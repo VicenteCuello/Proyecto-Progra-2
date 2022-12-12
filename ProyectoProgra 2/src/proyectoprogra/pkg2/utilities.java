@@ -51,6 +51,7 @@ class startConfig {
     ArrayList<Player> Players;  
     ArrayList<hole> Agujeros;
     boolean finish;
+    boolean turn;
 
     /**
      *Se inicializa todos los objetos que apareceran en interfaz
@@ -66,9 +67,10 @@ class startConfig {
         ballSetter = new ArrayList<>();
         Table = new MesaPool();
         Players = new ArrayList<>();
-        Players.add(new Player(false));
-        Players.add(new Player(true));
+        Players.add(new Player());
+        Players.add(new Player());
         finish = false;
+        turn = true;
     }
     /**
      *Añade pelotas
@@ -87,6 +89,7 @@ class startConfig {
             aux = new Pelota(x,y, n);
             for(int j = 0; j < ballSetter.size(); j++){
                 if(bCollision(aux, ballSetter.get(j)) == true){
+                    ballSetter.get(j).setVelocity(0,0);
                     colDetector = true;
                 }
             }
@@ -133,23 +136,18 @@ class startConfig {
                 colDetector = false;
                 Random randX = new Random();
                 Random randY = new Random();
-                int x = 251 + randX.nextInt(600);
-                int y = 164 + randY.nextInt(300);
+                int x = 251 + randX.nextInt(740);
+                int y = 164 + randY.nextInt(360);
                 aux = new Pelota(x,y,i+1);
                 for(int j = 0; j < ballSetter.size(); j++){
                     if(bCollision(aux, ballSetter.get(j)) == true && aux.getType()!= ballSetter.get(j).getType()){
                         colDetector = true;
+                        ballSetter.get(j).setVelocity(0, 0);
                     }
                 }
             }while(colDetector == true);
             ballSetter.add(aux);
             ballSetter.get(i).setVelocity(0, 0);
-        }
-        for (int i = 0; i < ballSetter.size(); i++) {
-            if(ballSetter.get(i).getType() == 16){
-                Players.get(0).taco.golpearBola(ballSetter.get(i),Frame, ballSetter);
-                Players.get(1).taco.golpearBola(ballSetter.get(i),Frame, ballSetter);
-            }
         }
     }
 
@@ -245,12 +243,12 @@ class startConfig {
                 if(ballSetter.get(i).getType() == 16){
                         this.addBall(16);
                  }
-                if(Players.get(0).taco.myTurn == true){
+                if(turn == false){
                     Players.get(0).addPoint(ballSetter.get(i));
                     Players.get(0).addPelota(ballSetter.get(i));
                     ballSetter.remove(i);
                 }
-                if(Players.get(1).taco.myTurn == true){
+                if(turn == true){
                     Players.get(1).addPoint(ballSetter.get(i));
                     Players.get(1).addPelota(ballSetter.get(i));
                     ballSetter.remove(i);
@@ -262,8 +260,8 @@ class startConfig {
                 bCollision(ballSetter.get(i), ballSetter.get(j));
             }
         }
-        Players.get(0).Paint(g, 24, 100,1, ballSetter, Frame);
-        Players.get(1).Paint(g, 1100, 100,2, ballSetter, Frame);
+        Players.get(0).Paint(g, 1100, 100,1, ballSetter, Frame, turn); 
+        Players.get(1).Paint(g, 1100, 300,2, ballSetter, Frame, turn);
         if(ballSetter.size() == 1){
             finish =  true;
         }

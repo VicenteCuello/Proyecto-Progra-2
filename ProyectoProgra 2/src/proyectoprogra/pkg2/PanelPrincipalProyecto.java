@@ -42,18 +42,27 @@ public class PanelPrincipalProyecto extends JPanel implements KeyListener {
         Font font = new Font("Space Invaders",Font.BOLD,14);
         g.setFont(font);
         g.setColor(Color.white);
-        g.drawString("PULSE ", 500, 650);
-        g.drawString("PULSE ", 500, 80);
-        g.drawString("PULSE ", 500, 100);
+        g.drawString("PULSE", 500, 650);
+        g.drawString("PULSE", 500, 670);
+        g.drawString("BOTON", 5, 120);
+        g.drawString("BOTON", 5, 140);
+        g.drawString("BOTON", 5, 160);
+        g.drawString("O ", 610, 670);
         g.setColor(Color.green);
+        g.drawString("<- ", 570, 670);
         g.drawString("'R' ", 570, 650);
-        g.drawString("'A' ", 570, 80);
+        g.drawString("'A': ", 570-490-15, 120);
+        g.setColor(Color.CYAN);
+        g.drawString("'G': ", 570-490-15, 160);
         g.setColor(Color.red);
-        g.drawString("'M' ", 570, 100);
+        g.drawString("-> ", 630, 670);
+        g.drawString("'M': ", 570-490-15, 140);
         g.setColor(Color.white);
         g.drawString("PARA  REINICIAR  LA  MESA", 600, 650);
-        g.drawString("PARA  ANADIR PELOTAS", 600, 80);
-        g.drawString("PARA  REMOVER PELOTAS", 600, 100);
+        g.drawString("PARA  CAMBIAR LA POTENCIA", 660, 670);
+        g.drawString("+ PELOTAS", 600-490-15, 120);
+        g.drawString("- PELOTAS", 600-490-15, 140);
+        g.drawString("GOLPEAR", 600-490-15, 160);
         Table.paint(g); 
         start.paint(g, this);
         repaint();
@@ -82,6 +91,27 @@ public class PanelPrincipalProyecto extends JPanel implements KeyListener {
         if(e.VK_SPACE == e.getKeyCode()){
             start.finish = false;
             start.startGame(this);
+        }
+        if(e.VK_G == e.getKeyCode()){
+             if(start.turn == true &&  start.Players.get(0).taco.balls(start.ballSetter)){
+                start.turn = false;
+            }else{
+                start.turn = true;
+            }
+            for (int i = 0; i < start.ballSetter.size(); i++) {
+                if(start.ballSetter.get(i).getType() == 16){
+                    start.Players.get(0).taco.golpearBola(start.ballSetter.get(i),this, start.ballSetter);
+                    start.Players.get(1).taco.golpearBola(start.ballSetter.get(i),this, start.ballSetter);
+                }
+            }
+        }
+        if(e.VK_LEFT == e.getKeyCode()){
+            start.Players.get(0).taco.lessPower();
+            start.Players.get(1).taco.lessPower();
+        }
+        if(e.VK_RIGHT == e.getKeyCode()){
+            start.Players.get(0).taco.morePower();
+            start.Players.get(1).taco.morePower();
         }
     }
 

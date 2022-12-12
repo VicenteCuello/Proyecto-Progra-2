@@ -2,10 +2,10 @@
 package proyectoprogra.pkg2;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.MouseInfo;
 import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import javax.swing.JPanel;
@@ -18,18 +18,34 @@ import javax.swing.JPanel;
  * 
  */
 final class Taco extends MouseAdapter{
-    Boolean myTurn;
     private final int ball = 16;
     private double MousePositionX, MousePositionY;
     private double BallPositionX, BallPositionY;
+    int power;
     MouseListener ma;
     
     /**
      *Constructor de Taco, donde se define el estado del turno de los jugadores
      * @param state
      */
-    public Taco(Boolean state){
-        myTurn = state;
+    public Taco(){
+        power = 1;
+    }
+    
+    public void morePower(){
+        if(power == 9){
+            return;
+        }else{
+            power += 4;
+        }
+    }
+    
+    public void lessPower(){
+        if(power == 1){
+            return;
+        }else{
+            power -= 4;
+        }
     }
     
     /**
@@ -73,20 +89,12 @@ final class Taco extends MouseAdapter{
      * @param p
      */
     public void golpearBola(Pelota bola, JPanel Frame, ArrayList<Pelota> p){
-        ma = new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e){
-                if(balls(p) == true && myTurn == true){
-                    double distX = MousePositionX - BallPositionX;
-                    double distY = MousePositionY - BallPositionY;
-                    double angle = Math.atan2(distY, distX);
-                    bola.setVelocity((float)((-1)*(Math.cos(angle))), (float)((-1)*(Math.sin(angle))));
-                    myTurn = false;
-                }else{
-                    myTurn = true;
-                }
-            }
-        };Frame.addMouseListener(ma);
+        if(balls(p) == true){
+            double distX = MousePositionX - BallPositionX;
+            double distY = MousePositionY - BallPositionY;
+            double angle = Math.atan2(distY, distX);
+            bola.setVelocity((float)((-1)*(power*Math.cos(angle))), (float)((-1)*(power*Math.sin(angle))));
+        }
     }
     
     /**
@@ -125,6 +133,33 @@ final class Taco extends MouseAdapter{
         if(this.balls(A) == true){
             g.drawLine(x1, y1, x2, y2);
         }
+        Font font = new Font("Space Invaders",Font.BOLD, 15);
+        g.setFont(font);
+        g.setColor(Color.BLACK);
+        g.fillRect(515, 30, 230, 30);
+        g.setColor(Color.WHITE);
+        g.drawRect(515, 30, 230, 30);
+        g.setColor(c);
+        g.drawString("POTENCIA: ", 535, 50);
+        if(power == 1){
+            g.setColor(Color.GREEN);
+            g.fillRect(635, 35, 30, 15);
+        }
+        if(power == 5){
+            g.setColor(Color.GREEN);
+            g.fillRect(635, 35, 30, 15);
+            g.setColor(Color.YELLOW);
+            g.fillRect(635+30, 35, 30, 15);
+        }
+        if(power == 9){
+            g.setColor(Color.GREEN);
+            g.fillRect(635, 35, 30, 15);
+            g.setColor(Color.YELLOW);
+            g.fillRect(635+30, 35, 30, 15);
+            g.setColor(Color.RED);
+            g.fillRect(635+30+30, 35, 30, 15);
+        }
+            
     }
 }
 

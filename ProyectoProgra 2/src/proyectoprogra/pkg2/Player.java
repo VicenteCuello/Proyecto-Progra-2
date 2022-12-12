@@ -26,8 +26,8 @@ class Player {
      *se determina su puntaje inicial
      * @param state
      */
-    public Player(Boolean state){
-        taco = new Taco(state);
+    public Player(){
+        taco = new Taco();
         Puntos = new ArrayList<>();
         Score = 0;
     }
@@ -79,12 +79,12 @@ class Player {
      * @param p Pelotas metidas por el jugador en los agujeros
      * @param Frame Panel en el que se dibujaran los elementos
      */
-    public void Paint(Graphics g, int x, int y, int numjugador, ArrayList<Pelota> p, JPanel Frame){
+    public void Paint(Graphics g, int x, int y, int numjugador, ArrayList<Pelota> p, JPanel Frame, boolean turn){
         
         g.setColor(Color.BLACK);
-        g.fillRect(x, y, 150, 520);
+        g.fillRect(x, y, 150, 150);
         g.setColor(Color.WHITE);
-        g.drawRect(x, y, 150, 520);
+        g.drawRect(x, y, 150, 150);
         
         Font font = new Font("Space Invaders",Font.BOLD,12);
         Font font2 = new Font("Space Invaders",Font.BOLD,18);
@@ -101,15 +101,11 @@ class Player {
                 score = String.valueOf(Score);
                 g.drawString("PUNTAJE: "+score, x+5, y+100);
                 taco.updatePosition(Frame);
-                if(taco.myTurn == true){
+                if(turn == true){
                     taco.paint(g, Color.red, p, Frame);
                 }
-                    for (int i = 0; i < Puntos.size(); i++) {
-                    Puntos.get(i).x = 50;
-                    Puntos.get(i).y = 50+20*i;
-                    Puntos.get(i).paint(g);
-                }
                 break;
+             
             case 2:
                 player = String.valueOf(numjugador);
                 g.setColor(Color.blue);
@@ -120,12 +116,11 @@ class Player {
                 g.setFont(font);
                 score = String.valueOf(Score);
                 g.drawString("PUNTAJE: "+score, x+5, y+100);
-                taco.updatePosition(Frame);
-                if(taco.myTurn == true){
+                taco.updatePosition(Frame); 
+                if(turn == false){
                     taco.paint(g, Color.blue, p, Frame);
                 }
                 break;
         }
     }
-    
 }
