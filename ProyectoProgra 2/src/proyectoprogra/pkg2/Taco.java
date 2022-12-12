@@ -49,16 +49,14 @@ final class Taco extends MouseAdapter{
         ma = new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e){
-                if(balls(p) == true){
-                    if(myTurn == true){
-                        myTurn = false;
-                    }else{
-                        myTurn = true;
-                    }
+                if(balls(p) == true && myTurn == true){
                     double distX = MousePositionX - BallPositionX;
                     double distY = MousePositionY - BallPositionY;
                     double angle = Math.atan2(distY, distX);
-                    bola.setVelocity((float)((-1)*(Math.cos(angle))*6), (float)((-1)*(Math.sin(angle))*6));
+                    bola.setVelocity((float)((-1)*(Math.cos(angle))), (float)((-1)*(Math.sin(angle))));
+                    myTurn = false;
+                }else{
+                    myTurn = true;
                 }
             }
         };Frame.addMouseListener(ma);
@@ -89,6 +87,5 @@ final class Taco extends MouseAdapter{
             g.drawLine(x1, y1, x2, y2);
         }
     }
-    
 }
 

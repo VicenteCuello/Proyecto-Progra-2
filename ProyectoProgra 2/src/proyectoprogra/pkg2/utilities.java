@@ -1,5 +1,6 @@
 package proyectoprogra.pkg2;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Random;
@@ -32,6 +33,7 @@ class startConfig {
     MesaPool Table;
     ArrayList<Player> Players;  
     ArrayList<hole> Agujeros;
+    boolean finish;
     public startConfig(){
         Agujeros = new ArrayList();
         Agujeros.add(new hole(199+6,108+6));
@@ -45,6 +47,34 @@ class startConfig {
         Players = new ArrayList<>();
         Players.add(new Player(false));
         Players.add(new Player(true));
+        finish = false;
+    }
+    public void addBall(int n){
+        boolean colDetector;
+        Pelota aux;
+        do{
+            colDetector = false;
+            Random randX = new Random();
+            Random randY = new Random();
+            int x = 251 + randX.nextInt(600);
+            int y = 164 + randY.nextInt(300);
+            aux = new Pelota(x,y, n);
+            for(int j = 0; j < ballSetter.size(); j++){
+                if(bCollision(aux, ballSetter.get(j)) == true){
+                    colDetector = true;
+                }
+            }
+        }while(colDetector == true);
+        aux.setVelocity(0, 0);
+        ballSetter.add(aux);
+    }
+    public void removeBall(){
+        for (int i = 0; i < ballSetter.size(); i++) {
+            if(ballSetter.get(i).getType() == 17){
+                ballSetter.remove(i);
+                return;
+            }
+        }
     }
     public boolean enterCheck(Pelota p){
         for (int i = 0; i < Agujeros.size(); i++) {
@@ -75,8 +105,12 @@ class startConfig {
             ballSetter.add(aux);
             ballSetter.get(i).setVelocity(0, 0);
         }
-        Players.get(0).taco.golpearBola(ballSetter.get(15),Frame, ballSetter);
-        Players.get(1).taco.golpearBola(ballSetter.get(15),Frame, ballSetter);
+        for (int i = 0; i < ballSetter.size(); i++) {
+            if(ballSetter.get(i).getType() == 16){
+                Players.get(0).taco.golpearBola(ballSetter.get(i),Frame, ballSetter);
+                Players.get(1).taco.golpearBola(ballSetter.get(i),Frame, ballSetter);
+            }
+        }
     }
     public void restart(PanelPrincipalProyecto Frame){
         for(int i=0; i<2; i++){
@@ -136,7 +170,7 @@ class startConfig {
     }
     
     public void paint(Graphics g, JPanel Frame){
-        
+        if(finish == false){
         for(int i = 0; i < ballSetter.size(); i++){
             ballSetter.get(i).checkCollision(Table.Bordes, 1);
             ballSetter.get(i).checkCollision(Table.Bordes, 2);
@@ -151,6 +185,9 @@ class startConfig {
         }
         for (int i = 0; i < ballSetter.size(); i++) {
             if(this.enterCheck(ballSetter.get(i)) == true){
+                if(ballSetter.get(i).getType() == 16){
+                        this.addBall(16);
+                 }
                 if(Players.get(0).taco.myTurn == true){
                     Players.get(0).addPoint(ballSetter.get(i));
                     Players.get(0).addPelota(ballSetter.get(i));
@@ -170,5 +207,14 @@ class startConfig {
         }
         Players.get(0).Paint(g, 24, 100,1, ballSetter, Frame);
         Players.get(1).Paint(g, 1100, 100,2, ballSetter, Frame);
+        if(ballSetter.size() == 1){
+            finish =  true;
+        }
+    }else{
+            Font font = new Font("Space Invaders",Font.BOLD,25);
+            g.setFont(font);
+            g.setColor(Color.red);
+            g.drawString("JUEGO TERMINADO",500,300);
+        }
     }
 }

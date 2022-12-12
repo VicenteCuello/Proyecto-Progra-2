@@ -21,8 +21,9 @@ class Player {
     }
     
     public void addPoint(Pelota A){
-        if(A.getType() == 16 && Score > 0) {
+        if(A.getType() == 16){
             Score--;
+            return;
         }
         else{
             if(A.getType() == 8){
@@ -35,8 +36,12 @@ class Player {
     }
     
     public void addPelota(Pelota p){
+        if(p.getType() == 16){
+            return;
+        }
         Puntos.add(p);
     }
+    
     public void restart(){
         Puntos.removeAll(Puntos);
         Score = 0;
@@ -62,10 +67,15 @@ class Player {
                 
                 g.setFont(font);
                 score = String.valueOf(Score);
-                g.drawString("PUNTAJE: "+score, x+5, y+130);
+                g.drawString("PUNTAJE: "+score, x+5, y+100);
                 taco.updatePosition(Frame);
                 if(taco.myTurn == true){
                     taco.paint(g, Color.red, p, Frame);
+                }
+                    for (int i = 0; i < Puntos.size(); i++) {
+                    Puntos.get(i).x = 50;
+                    Puntos.get(i).y = 50+20*i;
+                    Puntos.get(i).paint(g);
                 }
                 break;
             case 2:
@@ -77,7 +87,7 @@ class Player {
                 
                 g.setFont(font);
                 score = String.valueOf(Score);
-                g.drawString("PUNTAJE: "+score, x+5, y+130);
+                g.drawString("PUNTAJE: "+score, x+5, y+100);
                 taco.updatePosition(Frame);
                 if(taco.myTurn == true){
                     taco.paint(g, Color.blue, p, Frame);

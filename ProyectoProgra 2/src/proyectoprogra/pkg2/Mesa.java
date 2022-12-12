@@ -15,7 +15,6 @@ final class MesaPool {
     ArrayList<Segmento> Bordes;
     
     public MesaPool(){   
-        
         poolImage = new ImageIcon("sources/mesapool.png").getImage();
         Bordes = new ArrayList<>();
         this.addSegments();

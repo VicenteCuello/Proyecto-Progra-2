@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.util.ArrayList;
+import java.util.Random;
 
 class Pelota {
     
@@ -13,6 +14,10 @@ class Pelota {
     int w = 20, h = 20;
     private final int type;
     private Color color;
+    Random randX;
+    Random randY; 
+    Random randZ;
+    int r, gr, b;
     
     public Pelota(float x, float y, int type){
         this.x = x;
@@ -20,6 +25,12 @@ class Pelota {
         this.velX = 15;
         this.velY = 15;
         this.type = type;
+        randX = new Random();
+        randY = new Random();
+        randZ = new Random();
+        r = randX.nextInt(254);
+        gr = randY.nextInt(254);
+        b = randZ.nextInt(254);
     }
     
     public void move(){
@@ -327,7 +338,11 @@ class Pelota {
                 g.setColor(this.color);
                 g.fillArc(Math.round(x), Math.round(y), w, h, 0, 360);
                 break;
+            case 17:
+                this.color = new Color(r, gr, b);
+                g.setColor(color);
+                g.fillArc(Math.round(x), Math.round(y), w, h, 0, 360);
+                break;
         }
     }
-    
 }
