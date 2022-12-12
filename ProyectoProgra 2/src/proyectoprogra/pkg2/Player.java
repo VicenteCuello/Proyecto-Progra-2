@@ -7,6 +7,13 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import javax.swing.JPanel;
 
+/**
+ *
+ * @author Maximiliano Lopez
+ * @author Ivan Zapata
+ * @author Vicente Cuello
+ * 
+ */
 class Player {
     
     public Taco taco;
@@ -14,12 +21,21 @@ class Player {
     private int Score;
     private final ArrayList<Pelota> Puntos;
     
+    /**
+     *Constructor de jugador, donde se inicializan los objetos con los que interactua principalmente y
+     *se determina su puntaje inicial
+     * @param state
+     */
     public Player(Boolean state){
         taco = new Taco(state);
         Puntos = new ArrayList<>();
         Score = 0;
     }
     
+    /**
+     *Añade o quita puntaje al jugador
+     * @param A pelota que equivale a cierta cantidad de puntaje
+     */
     public void addPoint(Pelota A){
         if(A.getType() == 16){
             Score--;
@@ -35,6 +51,10 @@ class Player {
         }
     }
     
+    /**
+     *Añade las pelotas que el jugador logra meter en los agujeros
+     * @param p
+     */
     public void addPelota(Pelota p){
         if(p.getType() == 16){
             return;
@@ -42,11 +62,23 @@ class Player {
         Puntos.add(p);
     }
     
+    /**
+     *Reinicia las pelotas que el jugador a metido y reinicia su putnaje a cero
+     */
     public void restart(){
         Puntos.removeAll(Puntos);
         Score = 0;
     }
     
+    /**
+     *Dibuja el nombre de cada jugador, su numero y color asociados
+     * @param g
+     * @param x entero, posicion de los elementos en x
+     * @param y entero, posicion de los elementos en y
+     * @param numjugador entero, numero asociado a jugador
+     * @param p Pelotas metidas por el jugador en los agujeros
+     * @param Frame Panel en el que se dibujaran los elementos
+     */
     public void Paint(Graphics g, int x, int y, int numjugador, ArrayList<Pelota> p, JPanel Frame){
         
         g.setColor(Color.BLACK);

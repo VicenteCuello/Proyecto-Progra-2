@@ -9,12 +9,20 @@ import java.awt.event.KeyListener;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
+/**
+ *
+ * @author Maximiliano Lopez
+ * @author Ivan Zapata
+ * @author Vicente Cuello
+ * 
+ */
 public class PanelPrincipalProyecto extends JPanel implements KeyListener {
     
     private final startConfig start;
     private final MesaPool Table;
     private final Image wallpaper;
     
+    /**Constructor de Panel en el cual se define la imagen de fondo y se inicializa lo que se mostrara en pantalla */
     public PanelPrincipalProyecto(){
         this.setBackground(Color.LIGHT_GRAY);
         this.setLayout(null);
@@ -24,6 +32,10 @@ public class PanelPrincipalProyecto extends JPanel implements KeyListener {
         start.startGame(this);
     }
     
+    /**
+     *Dibuja lo que se vera finalmente en la interfaz
+     * @param g
+     */
     @Override
     public void paint(Graphics g){
         g.drawImage(wallpaper,0,0, 1280, 720,null);
@@ -52,6 +64,10 @@ public class PanelPrincipalProyecto extends JPanel implements KeyListener {
        
     }
 
+    /**
+     *Detecta eventos de teclado para reiniciar o terminar el juego y añadir o remover pelotas
+     * @param e
+     */
     @Override
     public void keyPressed(KeyEvent e) {
         if(e.VK_R == e.getKeyCode()){

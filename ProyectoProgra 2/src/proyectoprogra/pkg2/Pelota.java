@@ -6,6 +6,13 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ *Una pelota con la cual interactuar 
+ * @author Maximiliano Lopez
+ * @author Ivan Zapata
+ * @author Vicente Cuello
+ * 
+ */
 class Pelota {
     
     double x, y; 
@@ -19,6 +26,12 @@ class Pelota {
     Random randZ;
     int r, gr, b;
     
+    /**
+     *Constructor de pelota, donde se define su posicion y se define el tipo de pelota que es
+     * @param x posicion en x flotante
+     * @param y posicion en y flotante
+     * @param type tipo de pelota entero
+     */
     public Pelota(float x, float y, int type){
         this.x = x;
         this.y = y;
@@ -33,6 +46,7 @@ class Pelota {
         b = randZ.nextInt(254);
     }
     
+    /**Calcula como se movera la pelota dependiendo de su velocidad */
     public void move(){
         this.x += velX; 
         this.y += velY;
@@ -44,6 +58,11 @@ class Pelota {
         }
     }
     
+    /**
+     *Se determina y se calcula como seria la tryectoria de las pelotas cuando colisionan
+     * @param G array de segmentos limites de la mesa
+     * @param n entero que representa una zona de la mesa
+     */
     public void checkCollision(ArrayList<Segmento> G, int n){
         if(n == 1){
             for (int i = 0; i < 10; i++) {
@@ -169,15 +188,28 @@ class Pelota {
         }
     }
     
+    /**
+     *Determina la velocidad de la pelota
+     * @param x velocidad en x flotante
+     * @param y velocidad en y flotante
+     */
     public void setVelocity(float x, float y){
         this.velX = (float)x;
         this.velY = (float)y;
     }
     
+    /**
+     *Retorna el tipo de pelota
+     * @return
+     */
     public int getType(){
         return this.type;
     }
     
+    /**
+     *Se le asigna un diseño a la pelota dependiendo de su numero 
+     * @param g
+     */
     public void paint(Graphics g){
         Font font = new Font("Space Invaders",Font.BOLD, 8*w/25);
         int x = (int) this.x;

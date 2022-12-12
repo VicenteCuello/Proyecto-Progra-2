@@ -6,6 +6,13 @@ import java.awt.Image;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 
+/**
+ *
+ * @author Maximiliano Lopez
+ * @author Ivan Zapata
+ * @author Vicente Cuello
+ * 
+ */
 final class MesaPool {
     
     private final Image poolImage;
@@ -14,12 +21,14 @@ final class MesaPool {
     private final int h = 504;
     ArrayList<Segmento> Bordes;
     
+    /**Constructor que define la imagen y los limites de la mesa */
     public MesaPool(){   
         poolImage = new ImageIcon("sources/mesapool.png").getImage();
         Bordes = new ArrayList<>();
         this.addSegments();
     }
     
+    /** Se añaden los bordes de la mesa utilizando la clase Segmento */
     public void addSegments(){
         
         //DOWN BORDERS
@@ -63,22 +72,36 @@ final class MesaPool {
         Bordes.add(new Segmento(199+857, 108+455, 199+857, 108+455+8)); 
     }
     
+    /** Dibuja la Mesa junto con su imagen y su posicion en pantalla con los limites correspondientes
+     *
+     * @param g
+     */
     public void paint(Graphics g){
         
         g.drawImage(poolImage, 199, 108, w, h, null);
         for (int i = 0; i < Bordes.size(); i++) {
             Bordes.get(i).paint(g);
         }
-        
     }
 
 }
 
+/**
+ *
+ * 
+ */
 class Segmento{
     
     double x1, y1, x2, y2;
     double cx, cy, angle, large;
     
+    /**
+     *Crea los segmentos que formaran los limites de la mesa
+     * @param x1 primera coordenada x
+     * @param y1 primera coordenada y
+     * @param x2 segunda coordenada x
+     * @param y2 segunda coordenada y
+     */
     public Segmento(float x1, float y1, float x2, float y2){
         this.x1 = x1;
         this.x2 = x2;
@@ -90,6 +113,10 @@ class Segmento{
         angle = Math.atan2((y2-y1), (x2-x1));
     }
     
+    /**
+     *Dibuja los limites de la mesa en pantalla
+     * @param g
+     */
     public void paint(Graphics g){
         g.setColor(Color.GREEN);
         g.drawLine((int)x1,(int)y1,(int)x2,(int)y2);

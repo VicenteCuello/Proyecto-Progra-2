@@ -10,7 +10,13 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import javax.swing.JPanel;
 
-
+/**
+ *
+ * @author Maximiliano Lopez
+ * @author Ivan Zapata
+ * @author Vicente Cuello
+ * 
+ */
 final class Taco extends MouseAdapter{
     Boolean myTurn;
     private final int ball = 16;
@@ -18,16 +24,31 @@ final class Taco extends MouseAdapter{
     private double BallPositionX, BallPositionY;
     MouseListener ma;
     
+    /**
+     *Constructor de Taco, donde se define el estado del turno de los jugadores
+     * @param state
+     */
     public Taco(Boolean state){
         myTurn = state;
     }
     
+    /**
+     *Se actualiza la posicion del taco dependiendo de la posicion del cursor 
+     * @param Frame
+     */
     public void updatePosition(JPanel Frame){
         JPanel XY = Frame;
         MousePositionX = MouseInfo.getPointerInfo().getLocation().x - XY.getLocationOnScreen().x;
         MousePositionY = MouseInfo.getPointerInfo().getLocation().y - XY.getLocationOnScreen().y;
     }
     
+    /**
+     *Se calcula la posiocion en pantalla de el taco respecto una pelota
+     * @param x double posicion en x
+     * @param y double posicion en y
+     * @param vx double velocidad de la pelota en x
+     * @param vy double velocidad de la pelota en y
+     */
     public void BallPosition(double x, double y, double vx, double vy){
         BallPositionX = x+10;
         BallPositionY = y+10;
@@ -45,6 +66,12 @@ final class Taco extends MouseAdapter{
         }
     }
     
+    /**
+     * Cuando todas las pelotas estan quietas, si el taco golpea a la pelota, se cambia la velocidad y direccion de la misma
+     * @param bola peltota que el taco golpea
+     * @param Frame
+     * @param p
+     */
     public void golpearBola(Pelota bola, JPanel Frame, ArrayList<Pelota> p){
         ma = new MouseAdapter() {
             @Override
@@ -62,6 +89,11 @@ final class Taco extends MouseAdapter{
         };Frame.addMouseListener(ma);
     }
     
+    /**
+     *Detecta si las peltoas estan quietas o en movimiento
+     * @param setter
+     * @return
+     */
     public Boolean balls(ArrayList<Pelota> setter){
         Boolean lector = true;
         for (int i = 0; i < setter.size(); i++) {
@@ -72,6 +104,13 @@ final class Taco extends MouseAdapter{
         return lector;
     }
     
+    /**
+     *Dibuja la linea que representa el taco, cambiando de color segun el turno del jugador
+     * @param g
+     * @param c color que adquiere el taco segun que turno sea
+     * @param A array de pelotas
+     * @param Frame
+     */
     public void paint(Graphics g, Color c, ArrayList<Pelota> A, JPanel Frame){
         g.setColor(c);
         this.balls(A);

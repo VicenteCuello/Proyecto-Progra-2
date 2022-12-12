@@ -6,12 +6,25 @@ import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.JPanel;
 
+/**
+ *
+ * @author Maximiliano Lopez
+ * @author Ivan Zapata
+ * @author Vicente Cuello
+ * 
+ */
 class hole{
     int x, y, w=20, h=20;
     public hole(int x, int y){
         this.x = x;
         this.y = y;
     }
+
+    /**
+     *Detecta cuando entra una pelota en un agujero
+     * @param p
+     * @return
+     */
     public boolean enterBall(Pelota p){
         boolean detector = false;
         double x1 = x + w/2;
@@ -27,6 +40,10 @@ class hole{
     }
 }
 
+/**
+ *Inicia todos los objetos que aparecen en pantalla
+ * @author maxil
+ */
 class startConfig {
     
     ArrayList<Pelota> ballSetter;
@@ -34,6 +51,10 @@ class startConfig {
     ArrayList<Player> Players;  
     ArrayList<hole> Agujeros;
     boolean finish;
+
+    /**
+     *Se inicializa todos los objetos que apareceran en interfaz
+     */
     public startConfig(){
         Agujeros = new ArrayList();
         Agujeros.add(new hole(199+6,108+6));
@@ -49,6 +70,11 @@ class startConfig {
         Players.add(new Player(true));
         finish = false;
     }
+    /**
+     *Añade pelotas
+     * @param n
+     * 
+     */
     public void addBall(int n){
         boolean colDetector;
         Pelota aux;
@@ -68,6 +94,9 @@ class startConfig {
         aux.setVelocity(0, 0);
         ballSetter.add(aux);
     }
+    /**
+     *Remueve las pelotas 
+     */
     public void removeBall(){
         for (int i = 0; i < ballSetter.size(); i++) {
             if(ballSetter.get(i).getType() == 17){
@@ -76,6 +105,12 @@ class startConfig {
             }
         }
     }
+
+    /**
+     *Comprueba si una pelota entro a un agujero
+     * @param p
+     * @return true si la pelota entro, false si no entro
+     */
     public boolean enterCheck(Pelota p){
         for (int i = 0; i < Agujeros.size(); i++) {
             if(Agujeros.get(i).enterBall(p) == true){
@@ -84,6 +119,11 @@ class startConfig {
         }
         return false;
     }
+
+    /**
+     *Inicializa las pelotas para jugar y detecta los golpes a la pelota
+     * @param Frame
+     */
     public void startGame(PanelPrincipalProyecto Frame){
         ballSetter = new ArrayList<>();
         boolean colDetector;
@@ -112,6 +152,11 @@ class startConfig {
             }
         }
     }
+
+    /**
+     *Reinicia el juego, se cambia el puntaje de ambos jugadores a cero y se disponen las pelotas en la mesa nuevamente
+     * @param Frame
+     */
     public void restart(PanelPrincipalProyecto Frame){
         for(int i=0; i<2; i++){
             Players.get(i).restart();
@@ -119,6 +164,13 @@ class startConfig {
         this.ballSetter.removeAll(this.ballSetter);
         this.startGame(Frame);
     }
+
+    /**
+     *Se comprueba y calcula como interactuan las peltoas entre si cuando colisionan
+     * @param A primera pelota a comprobar
+     * @param B segunda pelota a comprobar
+     * @return
+     */
     public boolean bCollision(Pelota A, Pelota B){
         double dx = B.x- A.x;
         double dy = B.y - A.y;
@@ -169,6 +221,11 @@ class startConfig {
         return false;
     }
     
+    /**
+     *Dibuja las colisiones de los objetos y administra los eventos del juego
+     * @param g
+     * @param Frame
+     */
     public void paint(Graphics g, JPanel Frame){
         if(finish == false){
         for(int i = 0; i < ballSetter.size(); i++){
