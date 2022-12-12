@@ -26,7 +26,6 @@ final class Taco extends MouseAdapter{
     
     /**
      *Constructor de Taco, donde se define el estado del turno de los jugadores
-     * @param state
      */
     public Taco(){
         power = 1;
@@ -34,7 +33,6 @@ final class Taco extends MouseAdapter{
     
     public void morePower(){
         if(power == 9){
-            return;
         }else{
             power += 4;
         }
@@ -42,7 +40,6 @@ final class Taco extends MouseAdapter{
     
     public void lessPower(){
         if(power == 1){
-            return;
         }else{
             power -= 4;
         }

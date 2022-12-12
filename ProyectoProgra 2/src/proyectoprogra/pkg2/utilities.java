@@ -272,4 +272,8 @@ class startConfig {
             g.drawString("JUEGO TERMINADO",500,300);
         }
     }
+
+    void paint(Class<Graphics> g, JPanel Frame) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }
